@@ -5,7 +5,7 @@ with open("README.md", "r", encoding='utf8') as fh:
 
 setuptools.setup(
     name="braille-art",
-    version="0.0.1",
+    version="0.0.2",
     author=".direwolf",
     author_email="kururinmiracle@outlook.com",
     description="Braille art generator",
@@ -23,5 +23,9 @@ setuptools.setup(
     entry_points={"console_scripts": [
         "brailleart = brailleart:main"
         ]
-    }
+    },
+    install_requires=[
+        'numpy>=1.21.2',
+        'opencv-python>=4.5.3.56'
+    ]
 )
