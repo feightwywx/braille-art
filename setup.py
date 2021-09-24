@@ -5,7 +5,7 @@ with open("README.md", "r", encoding='utf8') as fh:
 
 setuptools.setup(
     name="braille-art",
-    version="0.0.2",
+    version="0.0.3",
     author=".direwolf",
     author_email="kururinmiracle@outlook.com",
     description="Braille art generator",

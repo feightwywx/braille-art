@@ -33,7 +33,7 @@ def array_to_braille(array) -> str:
     return magic_table[char_id]
 
 
-def init_img(img, width: int = None, height: int = None):
+def init_img(img, width: int = None, height: int = None, threshold: int = None):
     img_shape = img.shape
     # 如果指定了width，等比例调整尺寸
     if width is not None and height is not None:
@@ -46,7 +46,11 @@ def init_img(img, width: int = None, height: int = None):
     if len(img_shape) > 2:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # 大律法二值化
-    ret, img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+    if threshold is None:
+        ret, img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+        print('OTSU estimated threshold: {}'.format(ret))
+    else:
+        ret, img = cv2.threshold(img, threshold, 255, cv2.THRESH_BINARY)
     # 补边
     img_width = img.shape[0]
     img_height = img.shape[1]
@@ -60,9 +64,9 @@ def init_img(img, width: int = None, height: int = None):
     return img
 
 
-def convert(path: str, width: int = None, height: int = None):
+def convert(path: str, width: int = None, height: int = None, threshold: int = None):
     img = cv2.imread(path)
-    img = init_img(img, width if width else None, height if height else None)
+    img = init_img(img, width if width else None, height if width else None, threshold)
 
     # 切分图像数组
     row_per_canvas = len(img) // 4

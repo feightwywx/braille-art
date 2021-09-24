@@ -13,12 +13,15 @@ def main():
     type=int)
     parser.add_argument("-o", "--output",
     help="output your braille art to this file if you want")
+    parser.add_argument("-s", "--threshold",
+    help="threshold used in image binaryzation, if not assigned, use OTSU to estimate",
+    type=int)
 
     args = parser.parse_args()
-    result = convert(args.path, args.width, args.height)
+    result = convert(args.path, args.width, args.height, args.threshold)
     print(result)
     if args.output:
-        with open(args.output, mode='w') as f:
+        with open(args.output, mode='w', encoding='utf8') as f:
             f.write(result)
             print(''.join(['Braille art saved: ', args.output]))
     
